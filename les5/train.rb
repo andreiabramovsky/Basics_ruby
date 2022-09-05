@@ -1,7 +1,7 @@
 class Train
-    attr_reader :id, :type, :speed, :current_station, :previous_station, :next_station
+    attr_reader :id, :type, :speed, :wagons, :current_station, :previous_station, :next_station
 
-    def initialize(id, type) #имеет номер и тип
+    def initialize(id) 
       @id = id
       @type = type
       @speed = 0
@@ -12,7 +12,7 @@ class Train
       @speed = speed
     end
     
-    def current_speed(speed) #может возвращать текущую скорость
+    def current_speed #может возвращать текущую скорость
       @speed = speed
     end
 
@@ -20,23 +20,11 @@ class Train
       @speed = 0
     end
 
-    def add_wagon #может прицеплять вагон
-      if self.speed == 0
-        self.wagons += 1
-      end
-    end
-
-    def del_wagon #может отцеплять вагон
-      if self.speed == 0
-        self.wagons -= 1
-      end
-    end
-
     def take_route(route) #может принимать маршрут
       @route = route
       @current_station = route.stations_list[0]
       @previous_station = "Вы на первой станции маршрута"
-      @next_station = route.station_list[1]
+      @next_station = route.stations_list[1]
     end
 
     def forward #может перемещаться по маршруту вперед

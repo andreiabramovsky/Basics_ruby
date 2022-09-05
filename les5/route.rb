@@ -8,7 +8,13 @@ class Route
     @stations_list[1] = finish_station
   end
 
-  def add_station(station_name) #может добавлять промежуточную станцию
+  def show_route #может выводить список всех станций
+    @stations_list.each { |station_name| puts station_name.station_name}
+  end
+
+  private
+
+  def add_new_station(station_name) #может добавлять промежуточную станцию
     @stations_list.insert(-2, station_name) #добавить в массив после элемента с индексом -2
   end
 
@@ -18,10 +24,6 @@ class Route
     else @stations_list.include?(station_name)
       @stations_list.delete(station_name)
     end
-  end
-
-  def show_route #может выводить список всех станций
-    @stations_list.each { |station_name| put station_name}
   end
 
 end

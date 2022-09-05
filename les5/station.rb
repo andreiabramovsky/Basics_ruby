@@ -1,5 +1,6 @@
 class Station
 
+  attr_accessor :trains
   attr_reader :station_name
 
   def initialize(station_name) #имеет название, которое указывается при создании
@@ -12,7 +13,7 @@ class Station
   end
 
   def trains_list #может возвращать список поездов на станции     
-    puts "@trains.each { |train| puts train.id}"
+    puts @trains.each { |train| puts train.id}
   end
 
   def train_list_type #может возвращать список поездов по типу
