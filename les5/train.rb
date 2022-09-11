@@ -1,60 +1,82 @@
 class Train
-    attr_reader :id, :type, :speed, :wagons, :current_station, :previous_station, :next_station
+  attr_reader :id, :speed, :route, :wagons, :current_station, :previous_station, :next_station
 
-    def initialize(id) 
+  def initialize(id) 
       @id = id
-      @type = type
       @speed = 0
       @wagons = []
-    end
+      @route = nil
+  end
 
-    def speed_up(speed) #может набирать скорость
-      @speed = speed
-    end
+  def speed_up(speed) #может набирать скорость
+    @speed = speed
+  end
     
-    def current_speed #может возвращать текущую скорость
-      @speed = speed
-    end
+  def current_speed #может возвращать текущую скорость
+    speed
+  end
 
-    def speed_down #может тормозить
-      @speed = 0
-    end
+  def speed_down #может тормозить
+    @speed = 0
+  end
 
-    def take_route(route) #может принимать маршрут
-      @route = route
-      @current_station = route.stations_list[0]
-      @previous_station = "Вы на первой станции маршрута"
-      @next_station = route.stations_list[1]
-    end
+  def add_wagon(wagon) #прицепить вагон
+    wagons << wagon if wagon.type == type && speed == 0
+  end
 
-    def forward #может перемещаться по маршруту вперед
-      if @route == nil
-        puts "Выберите маршрут"
-      elsif @current_station == @route.stations_list[-1]
-        puts "Вы прибыли на конечную станцию"
-      else
-        @previous_station = @current_station
-        @current_station = @route.stations_list[@route.stations_list.index(@current_station) + 1]
-        @next_station = @route.stations_list[@route.stations_list.index(@current_station) + 1]
-      end
+  def delete_wagon(wagon) #отцепить вагон
+    wagons.delete(wagon) if wagon.type == type && speed == 0
+  end
+
+  def take_route(route) #может принимать маршрут
+    @route = route
+    @current_station = route.first_station
+    @previous_station = "Вы на первой станции маршрута"
+    @next_station = route.stations[1]
+  end
+
+  def forward #может перемещаться по маршруту вперед
+    if route == nil
+      puts "Выберите маршрут"
+    elsif current_station == route.last_station
+      puts "Вы прибыли на конечную станцию"
+    else
+      @previous_station = current_station
+      @current_station = new_station_forward_from(previous_station) #обновить текущую станцию
+      @next_station = new_station_forward_from(current_station) #обновить следующую станцию
     end
+  end
         
-    def back #может перемещаться по маршруту назад
-        if @route == nil
-          puts "Выберите маршрут"
-        elsif @current_station == @route.stations_list[0]
-          puts "Вы на начальной станции маршрута"
-        else
-          @previous_station = @current_station
-          @current_station = @route.stations_list[@route.stations_list.index(@current_station) - 1]
-          @next_station = @route.stations_list[@route.stations_list.index(@current_station) - 1]
-        end
+  def back #может перемещаться по маршруту назад
+    if route == nil
+      puts "Выберите маршрут"
+    elsif current_station == route.first_station
+      puts "Вы на начальной станции маршрута"
+    else
+      @previous_station = current_station
+      @current_station = new_station_back_from(previous_station)
+      @next_station = new_station_back_from(current_station)
     end
+  end
 
-    def where #может возвращать предыдущую, текущую, следующую станции по маршруту
-      puts "Current station - #{@current_station}"
-      puts "previousvious station - #{@previous_station}"
-      puts "Next station - #{@next_station}"
-    end
+  def location #может возвращать предыдущую, текущую, следующую станции по маршруту
+    puts "Current station - #{current_station.name}"
+    puts "previousvious station - #{previous_station.name}"
+    puts "Next station - #{next_station.name}"
+  end
+
+  protected
+
+  def find_index_of_station(station) #возвращает индекс станции на маршруте поезда
+    route.stations.index(station)
+  end
+
+  def new_station_forward_from(station)
+    route.stations[find_index_of_station(station) + 1]
+  end
+
+  def new_station_back_from(station)
+    route.stations[find_index_of_station(station) - 1]
+  end
 
 end

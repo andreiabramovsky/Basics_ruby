@@ -1,9 +1,8 @@
-class WagonPassenger
-
+class WagonPassenger < Wagon
   attr_reader :type, :number
 
   def initialize(number)
-    @number = number
-    @type = "passenger"
+    super
+    @type = "пассажирский"
   end
 end
