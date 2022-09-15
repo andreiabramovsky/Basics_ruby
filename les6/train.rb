@@ -1,6 +1,9 @@
 class Train
   attr_reader :id, :speed, :route, :wagons, :current_station, :previous_station, :next_station
 
+  include Company
+  include InstanceCounter
+  
   @@trains = []
 
   def self.find(id)

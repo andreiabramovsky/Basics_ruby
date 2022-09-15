@@ -1,6 +1,8 @@
 class Station
   attr_reader :name, :trains
 
+  include InstanceCounter
+
   @@stations = []
 
   def self.all
