@@ -102,6 +102,8 @@ class Train
     raise RuntimeError, "Не указан номер поезда" if id == ""
     raise RuntimeError, "Не указано название компании изготовителя поезда" if company == ""
     raise RuntimeError, "Неверный формат номера поезда" if id !~ ID_FORMAT
+    #raise RuntimeError, "Вы не указали тип поезда. Введите: пассажирский или грузовой" if type == ""
+    #raise RuntimeError, "Неверный тип поезда. Введите: пассажирский или грузовой" if type != "пассажирский" || type != "грузовой"
   end
 
 end
