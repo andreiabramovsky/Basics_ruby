@@ -5,10 +5,6 @@ class Station
 
   @@stations = []
 
-  def self.all
-    @@stations
-  end
-
   def initialize(name) #имеет название, которое указывается при создании
     @name = name
     @trains = []
@@ -22,6 +18,10 @@ class Station
     true
   rescue
     false  
+  end
+
+  def self.all
+    @@stations
   end
 
   def take_train(train) #может принимать поезда

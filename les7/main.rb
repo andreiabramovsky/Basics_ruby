@@ -62,9 +62,9 @@ class Main
     company = ask("Введите название производителя поезда")
     type = ask("Введите тип поезда: пассажирский или грузовой")
     if type == "пассажирский"
-      @trains << TrainPassenger.new(id, company)
+      @trains << TrainPassenger.new(id, company, type)
     else
-      @trains << TrainCargo.new(id, company)
+      @trains << TrainCargo.new(id, company, type)
     end
     puts "#{type.capitalize} поезд #{id} успешно создан. Производитель: #{company}."
     rescue RuntimeError => e

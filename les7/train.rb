@@ -5,9 +5,10 @@ class Train
   @@trains = []
   ID_FORMAT = /^[0-9a-zа-я]{3}-?[0-9a-zа-я]{2}$/i
 
-  def initialize(id, company) 
+  def initialize(id, company, type) 
       @id = id
       @company = company
+      @type = type
       @speed = 0
       @wagons = []
       @route = nil
@@ -102,8 +103,8 @@ class Train
     raise RuntimeError, "Не указан номер поезда" if id == ""
     raise RuntimeError, "Не указано название компании изготовителя поезда" if company == ""
     raise RuntimeError, "Неверный формат номера поезда" if id !~ ID_FORMAT
-    #raise RuntimeError, "Вы не указали тип поезда. Введите: пассажирский или грузовой" if type == ""
-    #raise RuntimeError, "Неверный тип поезда. Введите: пассажирский или грузовой" if type != "пассажирский" || type != "грузовой"
+    raise RuntimeError, "Вы не указали тип поезда. Введите: пассажирский или грузовой" if type == ""
+    raise RuntimeError, "Неверный тип поезда. Введите: пассажирский или грузовой" unless ["пассажирский", "грузовой"].include?(@type)
   end
 
 end
