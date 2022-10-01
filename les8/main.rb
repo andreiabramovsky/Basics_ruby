@@ -1,10 +1,3 @@
-=begin
-При создании вагона указывать кол-во мест или общий объем, в зависимости от типа вагона
-Выводить список вагонов у поезда (в указанном выше формате), используя созданные методы
-Выводить список поездов на станции (в указанном выше формате), используя  созданные методы
-Занимать место или объем в вагоне
-=end
-
 require_relative 'company.rb'
 require_relative 'instance_counter.rb'
 require_relative 'wagon.rb'
@@ -119,11 +112,11 @@ class Main
     company = ask("Введите название производителя вагона")
     wagon_type = ask("Введите тип вагона: пассажирский или грузовой")
     if wagon_type == "пассажирский"
-      total_seats = ask_integer("Введите количество мест в вагоне")
-      wagon = WagonPassenger.new(number, company, total_seats)
+      total_space = ask_integer("Введите количество мест в вагоне")
+      wagon = WagonPassenger.new(number, company, total_space)
     elsif wagon_type == "грузовой"
-      total_volume = ask_integer("Введите объём грузового вагона")
-      wagon = WagonCargo.new(number, company, total_volume)
+      total_space = ask_integer("Введите объём грузового вагона")
+      wagon = WagonCargo.new(number, company, total_space)
     end
     id = ask("Введите номер поезда, к которому нужно прицепить вагон")
     train(id).add_wagon(wagon)
@@ -185,12 +178,12 @@ class Main
     id = ask("Введите номер поезда")
     number = ask("Введите номер вагона")
     if train(id).type == "пассажирский"
-      wagon_of_train(id, number).take_seat
-      puts "Вы заняли одно место в вагоне #{number} поезда #{id}. Всего мест #{wagon_of_train(id, number).total_seats}, свободно #{wagon_of_train(id, number).get_free_seats}."
+      wagon_of_train(id, number).take_space
+      puts "Вы заняли одно место в вагоне #{number} поезда #{id}. Всего мест #{wagon_of_train(id, number).total_space}, свободно #{wagon_of_train(id, number).get_free_space}."
     else
-      puts "Объём вагона: #{wagon_of_train(id, number).total_volume}, свободно: #{wagon_of_train(id, number).get_free_volume}"
+      puts "Объём вагона: #{wagon_of_train(id, number).total_space}, свободно: #{wagon_of_train(id, number).get_free_space}"
       volume = ask_integer("Введите объём загрузки")
-      wagon_of_train(id, number).take_volume(volume)
+      wagon_of_train(id, number).take_space(volume)
       puts "Вы загрузили #{volume} в вагон #{number} поезда #{id}."
     end
     rescue RuntimeError => e
