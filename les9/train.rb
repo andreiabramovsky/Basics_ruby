@@ -6,8 +6,8 @@ class Train
   include InstanceCounter
   attr_reader :id, :speed, :route, :wagons, :current_station, :previous_station, :next_station, :company, :type
 
-  @trains = []
   ID_FORMAT = /^[0-9a-zа-я]{3}-?[0-9a-zа-я]{2}$/i.freeze
+  @@trains = []
 
   def initialize(id, company, type)
     @id = id

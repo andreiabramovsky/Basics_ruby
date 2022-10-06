@@ -6,14 +6,14 @@ class Station
 
   attr_reader :name, :trains
 
-  @stations = []
+  @@stations = []
 
   def initialize(name)
     @name = name
+    validate!
     @trains = []
     @@stations << self
     register_instance
-    validate!
   end
 
   def trains_on_station(&block)
