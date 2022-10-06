@@ -1,0 +1,5 @@
+Layout/EndOfLine:
+  Enabled: False
+
+Style/FrozenStringLiteralComment:
+  Enabled: False
