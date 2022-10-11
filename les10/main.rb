@@ -43,7 +43,7 @@ class Main
     @trains = []
     @routes = []
   end
-  
+
   def start_menu
     puts "Выберите действие и нажмите соответствующую цифру\n"
     MENU.each do |item|
@@ -134,6 +134,9 @@ class Main
     train(id).add_wagon(wagon)
     puts "#{wagon_type.capitalize} вагон #{number}, производителя #{company} успешно создан. " \
     "Вагон прицеплён к поезду #{id}."
+  rescue RuntimeError => e
+    puts e.message
+    retry
   end
 
   # отцеплять вагоны от поезда
