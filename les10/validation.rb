@@ -23,21 +23,26 @@ module Validation
   # module InstanceMethods
   module InstanceMethods
     def validate!
-      self.class.validations.each do |validation|
-        check_validity(validation[:validation_type], instance_variable_get("@#{validation[:attr_name]}"), validation[:parameter])
+      if self.class.superclass == Object
+        src = self.class
+      else
+        src = self.class.superclass
+      end      
+      src.validations.each do |validation|
+        check_validity(validation[:attr_name], validation[:validation_type], instance_variable_get("@#{validation[:attr_name]}"), validation[:parameter])
       end
     end
 
-    def check_validity(type, attr_value, parameter)
+    def check_validity(attr_name, type, attr_value, parameter)
       case type
       when :presence
         if attr_value.class == String
-          raise "Значение не указано" if attr_value.nil? || attr_value.empty?
+          raise "Ошибка: не указано значение #{attr_name.to_s}." if attr_value.nil? || attr_value.empty?
         end
       when :type
-        raise "Значение не соответствует заданному типу." if attr_value.class != parameter
+        raise "Ошибка: значение #{attr_name.to_s} не соответствует заданному типу #{parameter.to_s}." if attr_value.class != parameter
       when :format
-        raise "Значение не соответствует заданному формату." if attr_value !~ parameter
+        raise "Ошибка: #{attr_name.to_s} не соответствует заданному формату." if attr_value !~ parameter
       end
     end  
 

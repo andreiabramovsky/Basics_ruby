@@ -3,11 +3,6 @@
 # class WagonCargo
 class WagonCargo < Wagon
   attr_reader :type
-
-  validate :number, :presence
-  validate :number, :format, NUMBER_FORMAT
-  validate :company, :presence
-  validate :total_space, :presence
   
   def initialize(number, company, total_space)
     super(number, company, total_space)
